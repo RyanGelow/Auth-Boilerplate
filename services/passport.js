@@ -1,15 +1,15 @@
-const passport = requrie('passport');
+const passport = require('passport');
 const User = require('./../models/User');
 const config = require('./../config');
 const JwtStrategy   = require('passport-jwt').Strategy;
 const ExtractJwt    = require('passport-jwt').ExtractJwt;
-const LocalStrategy = require('passport.local');
+const LocalStrategy = require('passport-local');
 
 //Create local strategy
 
 //By default LocalStrategy is expecting a username and a password
 
-const localOptions = {usernameField: 'email'};
+const localOptions = { usernameField: 'email' };
 const localLogin = new LocalStrategy(localOptions, async (email, password, done) => {
     try{
         const user = await User.findOne({ email });
@@ -35,15 +35,15 @@ const localLogin = new LocalStrategy(localOptions, async (email, password, done)
 const jwtOptions = {
     // Tells JWT Strategy that whenever a request comes in, we want passport to handle it
     // It needs to look in the header for the property called "authorization"
-    jwtFromRequest: ExtractJwr.fromHeader('authorization'),
+    jwtFromRequest: ExtractJwt.fromHeader('authorization'),
     // Tells JWT Strategy what secret we used to encode the token so that it can decode it
-    secretOrKEy: config.secret
+    secretOrKey: config.secret
 }
 
 // We are going to get the payload argument from an incoming request
 // The payload argument is coming from the function that we will create in authRoutes
 // done is the function we call once we tried to authenticate this user
-const JwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
+const jwtLogin = new JwtStrategy(jwtOptions, async (payload, done) => {
     try {
         const user = await User.findById(payload.sub);
         if(user) {
