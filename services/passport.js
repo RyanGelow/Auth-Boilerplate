@@ -29,4 +29,15 @@ const localLogin = new LocalStrategy(localOptions, async (email, password, done)
     }
 })
 
+// Setup options for Jwt Strategy
+// We need to tell our strategy where to look for the token
+
+const jwtOptions = {
+    // Tells JWT Strategy that whenever a request comes in, we want passport to handle it
+    // It needs to look in the header for the property called "authorization"
+    jwtFromRequest: ExtractJwr.fromHeader('authorization'),
+
+    secretOrKEy: config.secret
+}
+
 passport.use(localLogin);
