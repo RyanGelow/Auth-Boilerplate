@@ -17,9 +17,9 @@ class Counter extends Component {
 }
 // *state* passthrough below could be replaced with (*{ counter }*) to take it down a level 
 // and calls for removing the state in the counter call below it
-function mapStateToProps(state){
+function mapStateToProps({ counter }){
     return {
-        counter: state.counter.counter
+        counter: counter.counter
     }
 }
 
