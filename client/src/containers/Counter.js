@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { incrementCounter, decrementCounter } from './../actions'
+import requireAuth from '../hoc/requireAuth';
 
 class Counter extends Component {
 
@@ -15,7 +16,7 @@ class Counter extends Component {
         )
     }
 }
-// *state* passthrough below could be replaced with (*{ counter }*) to take it down a level 
+// *state* callback below could be replaced with (*{ counter }*) to take it down a level 
 // and calls for removing the state in the counter call below it
 function mapStateToProps({ counter }){
     return {
@@ -24,4 +25,5 @@ function mapStateToProps({ counter }){
 }
 
 // connect always takes in mapStateToProps
-export default connect(mapStateToProps, { incrementCounter, decrementCounter })(Counter);
+// wrapped this in require auth for authentication
+export default requireAuth(connect(mapStateToProps, { incrementCounter, decrementCounter })(Counter));
